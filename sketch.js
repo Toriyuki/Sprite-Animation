@@ -10,7 +10,7 @@ let facing = 1;
 //Preloads all Sprite pages into an array.
 //To add more Sprites, move Sprite png to folder and add the file name to array.
 function preload() {
-  spriteSheetName = ["SpelunkyGuy.png", "Green.png", "Van Helsing.png"];
+  spriteSheetName = ["SpelunkyGuy.png", "Green.png", "Van Helsing.png", "Yellow.png"];
   NUM_OF_CHARACTERS = spriteSheetName.length;
 
   for(var i = 0; i < NUM_OF_CHARACTERS; i++) {
