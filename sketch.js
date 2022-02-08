@@ -1,6 +1,9 @@
 let spriteSheet, spriteSheetArray = [], spriteSheetName;
 let NUM_OF_CHARACTERS;
-let character;
+
+let NUM_OF_PLAYERS = 4;
+let playerArray = [];
+
 
 let sx = 0;
 let x = 100, y = 100;
@@ -22,16 +25,19 @@ function preload() {
 function setup() {
   createCanvas(1200, 600);
   imageMode(CENTER);
-
-  character = new Character(spriteSheetArray[0], x, y, 1);
+  
+  for(var i = 0; i < NUM_OF_PLAYERS; i++) {
+    playerArray.push(new Character(spriteSheetArray[Math.floor(Math.random() * NUM_OF_CHARACTERS)], Math.floor(Math.random() * 1200), Math.floor(Math.random() * 600)));
+  }
 }
 
 //Draws the character and character selection.
 function draw() {
   background(255);
-  line(0, 180, 1200, 180);
-  character.draw();
-  drawCharacterBox();
+  for(var i = 0; i < NUM_OF_PLAYERS; i++) {
+    playerArray[i].draw();
+  }
+  //drawCharacterBox();
 }
 
 //Creates the area to select a new character.
@@ -43,39 +49,45 @@ function drawCharacterBox() {
 }
 
 //Adds the function to select new character when mouse is pressed over the character box.
-function mousePressed() {
-  for(var i = 0; i < NUM_OF_CHARACTERS; i++) {
-    if((mouseX > (50 + (160 * i))) && (mouseX < (50 + (160 * (i + 1)))) && (mouseY > 200) && (mouseY < 360)) {
-      character.changeSprite(spriteSheetArray[i]);
-    }
-  }
-}
+//function mousePressed() {
+//  for(var i = 0; i < NUM_OF_CHARACTERS; i++) {
+//    if((mouseX > (50 + (160 * i))) && (mouseX < (50 + (160 * (i + 1)))) && (mouseY > 200) && (mouseY < 360)) {
+//      character.changeSprite(spriteSheetArray[i]);
+//    }
+//  }
+//}
 
 //Adds the function that whenever the left or right arrow keys are pressed, moves the sprite in that direction.
 function keyPressed() {
   if(keyCode == RIGHT_ARROW) {
-    character.go(1);
+    for(var i = 0; i < NUM_OF_PLAYERS; i++) {
+      playerArray[i].go(1);
+    }
   }
   else if(keyCode == LEFT_ARROW) {
-    character.go(-1);
+    for(var i = 0; i < NUM_OF_PLAYERS; i++) {
+      playerArray[i].go(-1);
+    }
   }
 }
 
 //Adds the function when the key is released, stops the movement of the sprite.
 function keyReleased() {
-  character.stop();
+  for(var i = 0; i < NUM_OF_PLAYERS; i++) {
+    playerArray[i].stop();
+  }
 }
 
 //Character Class
 class Character {
   //Constructer function that sets the variables
-  constructor(spriteSheet, x, y, facing) {
+  constructor(spriteSheet, x, y) {
     this.spriteSheet = spriteSheet;
     this.sx = 0;
     this.x = x;
     this.y = y;
     this.move = 0;
-    this.facing = facing;
+    this.facing = 1;
   }
 
   //Animates the sprite
